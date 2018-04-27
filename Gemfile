@@ -14,11 +14,12 @@ gem 'jbuilder',       '~> 2.7'
 gem 'bcrypt',         '~> 3.1.7'
 gem 'mini_magick',    '~> 4.8'
 gem 'bootsnap',       '>= 1.1.0', require: false
+gem 'nokogiri',       '~> 1.8.2'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails',  '~> 3.7'
-  gem 'factory_girl', '~> 4.9.0'
+  gem 'factory_bot', '~> 4.8.2'
 end
 
 group :development do
