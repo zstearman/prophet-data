@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>School</th>
+      <th>Nickname</th>
+      <th>Abbreviation</th>
+      <th>home_url</th>
+      <th>Arena</th>
+      <th>logo_url</th>
+      <th>Conference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.id %></td>
+        <td><%= team.school %></td>
+        <td><%= team.nickname %></td>
+        <td><%= team.abbreviation %></td>
+        <td><%= team.home_url %></td>
+        <td><%= team.arena %></td>
+        <td><%= team.logo_url %></td>
+        <td><%= team.conference.key %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

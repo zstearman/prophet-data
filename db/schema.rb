@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_27_195213) do
+ActiveRecord::Schema.define(version: 2018_04_27_204238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,21 @@ ActiveRecord::Schema.define(version: 2018_04_27_195213) do
     t.index ["name"], name: "index_conferences_on_name"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.string "school"
+    t.string "nickname"
+    t.string "abbreviation"
+    t.string "home_url"
+    t.string "arena"
+    t.string "logo_url"
+    t.bigint "conference_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abbreviation"], name: "index_teams_on_abbreviation"
+    t.index ["conference_id"], name: "index_teams_on_conference_id"
+    t.index ["school"], name: "index_teams_on_school"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -33,4 +48,5 @@ ActiveRecord::Schema.define(version: 2018_04_27_195213) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "teams", "conferences"
 end
