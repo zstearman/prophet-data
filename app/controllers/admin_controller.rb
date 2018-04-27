@@ -12,10 +12,10 @@ class AdminController < ApplicationController
     conferences = doc.css("div.ncaa-standings-conference")
     x = 1
     conferences.each do |conference|
-      x += 1
       conf = Conference.find_or_initialize_by(name: conference.css("div.ncaa-standings-conference-name").text)
       conf.id = x
       conf.save
+      x += 1
       teams = conference.css("table.ncaa-standing-conference-table tr")
       y = 0 
       teams.each do |team|

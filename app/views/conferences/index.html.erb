@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Name</th>
+      <th>Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @conferences.each do |conf| %>
+      <tr>
+        <td><%= conf.id %></td>
+        <td><%= conf.name %></td>
+        <td><%= conf.key %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
