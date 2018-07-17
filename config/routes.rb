@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     post   '/get_games',    to: 'admin#get_games'
     get    '/get_teams',    to: 'admin#get_teams'
     get    '/get players',  to: 'admin#get_players'
-    resources :teams
+    resources :teams, only: [:index, :show]
+    resources :conferences, only: [:index, :show]
 end

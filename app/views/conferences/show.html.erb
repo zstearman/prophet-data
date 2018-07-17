@@ -1,0 +1,17 @@
+<h1><%= @conference.name %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Nickname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @conference.teams.each do |team| %>
+      <tr>
+        <td><%= link_to team.school, team %></td>
+        <td><%= team.nickname %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

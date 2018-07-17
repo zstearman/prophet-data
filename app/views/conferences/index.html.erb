@@ -11,7 +11,7 @@
     <% @conferences.each do |conf| %>
       <tr>
         <td><%= conf.id %></td>
-        <td><%= conf.name %></td>
+        <td><%= link_to conf.name , conf %></td>
         <td><%= conf.key %></td>
       </tr>
     <% end %>

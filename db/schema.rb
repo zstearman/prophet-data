@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_163325) do
+ActiveRecord::Schema.define(version: 2018_07_17_213103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_163325) do
     t.string "hometown"
     t.bigint "team_id"
     t.integer "espn_id"
+    t.index ["espn_id"], name: "index_players_on_espn_id", unique: true
     t.index ["team_id"], name: "index_players_on_team_id"
   end
 
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_163325) do
     t.date "championship_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "current"
     t.index ["end_year"], name: "index_seasons_on_end_year"
     t.index ["start_year"], name: "index_seasons_on_start_year"
   end
@@ -62,6 +64,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_163325) do
     t.bigint "conference_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "espn_id"
     t.index ["abbreviation"], name: "index_teams_on_abbreviation"
     t.index ["conference_id"], name: "index_teams_on_conference_id"
     t.index ["school"], name: "index_teams_on_school"
