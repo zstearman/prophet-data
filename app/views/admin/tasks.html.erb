@@ -1,2 +1,31 @@
-<h3>Teams Tasks</h3>
-<%= link_to 'Import Teams', import_teams_path , method: :post %>
+<h1>Admin Module</h1>
+<h3>Instructions</h3>
+<p>The first step to creating the database is to seed with the list of teams and conferences. This can be done by running rails db:seed. The second step is to manually create the season in the console using Season.new().
+Be sure to create the season with start_year, end_year, start_date, regular_season_end_date, championship_date, and description.</p>
+
+<h3>Tasks</h3>
+
+<h5 style="margin-bottom: 0px">Create Teams</h5>
+<p style="margin: 0px;">Since the csv reader is having issues with importing teams, you can import them directly from ESPN using this link. This should take about two minutes.</p>
+<%= link_to('Import Teams', controller: "admin", action: "get_teams") %>
+
+<h5 style="margin-bottom: 0px;">Import Players</h5>
+<p style="margin: 0px;">This task will import the grab the rosters for each team. This does not create player seasons, only imports player data.</p>
+<%= link_to('Import Players', controller: "admin", action: "get_players") %>
+
+<h5 style="margin-bottom: 0px;">Create Team Seasons</h5>
+<p style="margin: 0px;">This task will import the create the team seasons for each team in a given season if they do not yet exist. It will also find the team page on ncaa.com for each team and save that url.</p>
+<%= link_to 'Create/Update Team Seasons', get_team_seasons_url , method: :post %>
+
+<h5 style="margin-bottom: 0px;">Import Games</h5>
+<p style="margin: 0px;">This task will cycle through the dates that the user specifies and import the games for each date. Games, TeamGames, and PlayerGames will be created or updated. This will NOT create 
+any additional teams, seasons, or players.</p>
+<%= form_tag(get_games_path, :method => "post") do %>
+
+  <%= label_tag(:start_date, "Start date:") %>
+  <%= select_date Date.today - 3.days, :prefix => :start_date %>
+  <%= label_tag(:end_date, "End date:") %>
+  <%= select_date Date.today, :prefix => :end_date %>
+  <%= submit_tag("Get games from selected dates") %>
+
+<% end %>

@@ -1,8 +1,8 @@
-id,name,key
+﻿id,name,key
 1,America East,AE
-2,American Athletic Conference,AAC
+2,American,AAC
 3,Atlantic 10,A10
-4,Atlantic Coast,ACC
+4,ACC,ACC
 5,Atlantic Sun,ASUN
 6,Big 12,B12
 7,Big East,BE
@@ -10,24 +10,24 @@ id,name,key
 9,Big South,BSOU
 10,Big Ten,B10
 11,Big West,BW
-12,Colonial Athletic,CAC
+12,Colonial,CAC
 13,Conference USA,CUSA
 14,Horizon,HOR
-15,Ivy League,IVY
-16,Metro Atlantic Athletic,MAAC
+15,Ivy,IVY
+16,MAAC,MAAC
 17,Mid-American,MAC
-18,Mid-Eastern,MEC
+18,MEAC,MEAC
 19,Missouri Valley,MVC
 20,Mountain West,MW
 21,Northeast,NEC
 22,Ohio Valley,OVC
 23,Pac-12,P12
 24,Patriot League,PAT
-25,Southeastern,SEC
+25,SEC,SEC
 26,Southern,SOU
 27,Southland,SLND
-28,Southwestern Athletic,SWAC
+28,SWAC,SWAC
 29,Summit League,SUM
 30,Sun Belt,SUN
 31,West Coast,WCC
-32,Western Athletic,WAC
+32,WAC,WAC

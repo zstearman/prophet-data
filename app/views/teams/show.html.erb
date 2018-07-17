@@ -1,0 +1,31 @@
+<h1><%= @team.school + " " + @team.nickname %></h1>
+<%= image_tag @team.logo_url, size: 100 %>
+<h3>Roster</h3>
+<table>
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>First Name</td>
+      <td>Last Name</td>
+      <td>Position</td>
+      <td>Height</td>
+      <td>Weight</td>
+      <td>Class</td>
+      <td>Hometown</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @team.players.order(:number).each do |player| %>
+    <tr>
+      <td><%= player.number %></td>
+      <td><%= player.first_name %></td>
+      <td><%= player.last_name %></td>
+      <td><%= player.position %></td>
+      <td><%= player.height %></td>
+      <td><%= player.weight %></td>
+      <td><%= player.year %></td>
+      <td><%= player.hometown %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

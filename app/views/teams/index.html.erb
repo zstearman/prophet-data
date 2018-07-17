@@ -16,13 +16,13 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.id %></td>
-        <td><%= team.school %></td>
+        <td><%= link_to team.school, team %></td>
         <td><%= team.nickname %></td>
         <td><%= team.abbreviation %></td>
         <td><%= team.home_url %></td>
         <td><%= team.arena %></td>
         <td><%= team.logo_url %></td>
-        <td><%= team.conference.key %></td>
+        <td><%= team.conference.id %></td>
       </tr>
     <% end %>
   </tbody>

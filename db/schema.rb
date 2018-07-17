@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_27_204238) do
+ActiveRecord::Schema.define(version: 2018_07_17_163325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,35 @@ ActiveRecord::Schema.define(version: 2018_04_27_204238) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_conferences_on_name"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.integer "number"
+    t.string "position"
+    t.integer "height"
+    t.integer "weight"
+    t.string "year"
+    t.string "hometown"
+    t.bigint "team_id"
+    t.integer "espn_id"
+    t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.integer "start_year"
+    t.integer "end_year"
+    t.string "description"
+    t.date "start_date"
+    t.date "regular_season_end_date"
+    t.date "championship_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_year"], name: "index_seasons_on_end_year"
+    t.index ["start_year"], name: "index_seasons_on_start_year"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -48,5 +77,6 @@ ActiveRecord::Schema.define(version: 2018_04_27_204238) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "players", "teams"
   add_foreign_key "teams", "conferences"
 end
