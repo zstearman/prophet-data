@@ -78,8 +78,18 @@ namespace :set_up do
     end
   end
   
-  desc "Create TeamSeasons for given season"
-  task create_team_seasons_with_input: :environment do
+  desc "Create TeamSeasons for current season"
+  task create_team_seasons: :environment do
+    season = Season.where(current: true).first
+    Team.all.each do |team|
+     team_season = TeamSeason.find_or_initialize_by(season_id: season.id, team_id: team.id)
+     team_season.save
+    end
+  end
+  
+  
+  desc "Get games from dates"
+  task create_games_with_input: :environment do
     puts "Input start date in YYYYMMDD format"
     start_date = STDIN.gets.strip
     puts "Input end date in YYYYMMDD format"
@@ -92,7 +102,9 @@ namespace :set_up do
       games = doc.css('div#sched-container tr.odd, div.sched-container tr.even')
       x = 0
       games.each do |game|
-        puts game
+        game_url = game.css('td')[2].css('a').attr('href').to_s
+        espn_id = game_url[game_url.index('gameId=') + 7, 9]
+        puts espn_id
         x += 1
       end
       puts x.to_s + " games on " + day.to_s
