@@ -5,6 +5,11 @@ Be sure to create the season with start_year, end_year, start_date, regular_seas
 
 <h3>Tasks</h3>
 
+<p>While these tasks can be run here, the app is more stable when calling the tasks in the console. Please use rails run for the tasks. The order will be as follows:<br/>
+1.) set-up:import_teams</br>
+2.) set-up:import_players</br>
+</p>
+
 <h5 style="margin-bottom: 0px">Create Teams</h5>
 <p style="margin: 0px;">Since the csv reader is having issues with importing teams, you can import them directly from ESPN using this link. This should take about two minutes.</p>
 <%= link_to('Import Teams', controller: "admin", action: "get_teams") %>

@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 
 namespace :set_up do
-  desc "TODO"
+  desc "Import Current Teams from ESPN"
   task import_teams: :environment do
     doc = Nokogiri::HTML(open("http://www.espn.com/mens-college-basketball/teams"))
     conferences = doc.css("div.mod-teams-list-medium")
@@ -48,7 +48,7 @@ namespace :set_up do
     end
   end
 
-  desc "TODO"
+  desc "Import Players from ESPN Rosters"
   task import_players: :environment do
     Player.all.update_all(team_id: nil)
     Team.all.each do |team|
@@ -75,6 +75,27 @@ namespace :set_up do
         new_player.hometown = player.css('td')[6].text
         new_player.save
       end
+    end
+  end
+  
+  desc "Create TeamSeasons for given season"
+  task create_team_seasons_with_input: :environment do
+    puts "Input start date in YYYYMMDD format"
+    start_date = STDIN.gets.strip
+    puts "Input end date in YYYYMMDD format"
+    end_date = STDIN.gets.strip
+    start_date = start_date.to_i
+    end_date = end_date.to_i
+    (start_date..end_date).each do |day|
+      url = "http://www.espn.com/mens-college-basketball/schedule/_/date/" + day.to_s + "/group/50"
+      doc = Nokogiri::HTML(open(url))
+      games = doc.css('div#sched-container tr.odd, div.sched-container tr.even')
+      x = 0
+      games.each do |game|
+        puts game
+        x += 1
+      end
+      puts x.to_s + " games on " + day.to_s
     end
   end
 end

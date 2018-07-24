@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_213103) do
+ActiveRecord::Schema.define(version: 2018_07_24_163536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,34 @@ ActiveRecord::Schema.define(version: 2018_07_17_213103) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_conferences_on_name"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "season_id"
+    t.integer "season_type"
+    t.string "status"
+    t.string "away_team"
+    t.string "home_team"
+    t.integer "away_score"
+    t.integer "home_score"
+    t.datetime "updated"
+    t.string "period"
+    t.decimal "point_spread"
+    t.decimal "over_under"
+    t.integer "home_money_line"
+    t.integer "away_money_line"
+    t.integer "tournament_id"
+    t.string "bracket"
+    t.integer "round"
+    t.integer "away_seed"
+    t.integer "home_seed"
+    t.integer "espn_id"
+    t.integer "away_previous_espn_id"
+    t.integer "home_previous_espn_id"
+    t.integer "tournament_display_order"
+    t.index ["season_id"], name: "index_games_on_season_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -54,6 +82,66 @@ ActiveRecord::Schema.define(version: 2018_07_17_213103) do
     t.index ["start_year"], name: "index_seasons_on_start_year"
   end
 
+  create_table "team_seasons", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "team_id"
+    t.bigint "season_id"
+    t.bigint "conference_id"
+    t.string "type"
+    t.integer "games_played"
+    t.integer "minutes"
+    t.integer "wins"
+    t.integer "losses"
+    t.integer "conf_games_played"
+    t.integer "conf_wins"
+    t.integer "conf_losses"
+    t.decimal "win_pct"
+    t.decimal "conf_win_pct"
+    t.integer "points"
+    t.decimal "points_per_game"
+    t.integer "fgm"
+    t.decimal "fgm_per_game"
+    t.integer "fga"
+    t.decimal "fga_per_game"
+    t.decimal "fg_pct"
+    t.integer "tpm"
+    t.decimal "tpm_per_game"
+    t.integer "tpa"
+    t.decimal "tpa_per_game"
+    t.decimal "tp_pct"
+    t.integer "ftm"
+    t.decimal "ftm_per_game"
+    t.integer "fta"
+    t.decimal "fta_per_game"
+    t.decimal "ft_pct"
+    t.integer "oreb"
+    t.decimal "oreb_per_game"
+    t.integer "dreb"
+    t.decimal "dreb_per_game"
+    t.integer "rebounds"
+    t.decimal "rebounds_per_game"
+    t.integer "assists"
+    t.decimal "assistes_per_game"
+    t.integer "tov"
+    t.decimal "tov_per_game"
+    t.integer "steals"
+    t.decimal "steals_per_game"
+    t.integer "blocks"
+    t.decimal "blocks_per_game"
+    t.integer "blka"
+    t.decimal "blka_per_game"
+    t.integer "fouls"
+    t.decimal "fouls_per_game"
+    t.integer "fouls_drawn"
+    t.decimal "fouls_drawn_per_game"
+    t.integer "point_diff"
+    t.decimal "point_diff_per_game"
+    t.index ["conference_id"], name: "index_team_seasons_on_conference_id"
+    t.index ["season_id"], name: "index_team_seasons_on_season_id"
+    t.index ["team_id"], name: "index_team_seasons_on_team_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "school"
     t.string "nickname"
@@ -80,6 +168,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_213103) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "games", "seasons"
   add_foreign_key "players", "teams"
   add_foreign_key "teams", "conferences"
 end
