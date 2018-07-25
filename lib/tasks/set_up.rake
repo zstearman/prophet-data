@@ -94,9 +94,10 @@ namespace :set_up do
     start_date = STDIN.gets.strip
     puts "Input end date in YYYYMMDD format"
     end_date = STDIN.gets.strip
-    start_date = start_date.to_i
-    end_date = end_date.to_i
-    (start_date..end_date).each do |day|
+    start_date = Date.strptime(start_date, '%Y%m%d')
+    end_date = Date.strptime(end_date, '%Y%m%d')
+    (start_date..end_date).each do |date|
+      day = date.strftime('%Y%m%d')
       url = "http://www.espn.com/mens-college-basketball/schedule/_/date/" + day.to_s + "/group/50"
       doc = Nokogiri::HTML(open(url))
       games = doc.css('div#sched-container tr.odd, div#sched-container tr.even')
@@ -106,25 +107,40 @@ namespace :set_up do
         espn_id = game_url[game_url.index('gameId=') + 7, 9]
         new_game = Game.find_or_initialize_by(espn_id: espn_id)
         if game.css('td')[0].at_css('span.team-name span')
-          new_game.away_team = game.css('td')[0].css('span.team-name span').text
+          new_game.away_team_name = game.css('td')[0].css('span.team-name span').text
           away_abbr = game.css('td')[0].css('span.team-name abbr').text
         else
-          new_game.away_team = game.css('td')[0].css('a.team-name span').text
+          new_game.away_team_name = game.css('td')[0].css('a.team-name span').text
           away_abbr = game.css('td')[0].css('a.team-name abbr').text
+          away_espn_id = game.css('td')[0].css('a.team-name').attr('href').to_s[/#{'/_/id/'}(.*?)#{'/'}/m, 1]
         end
         if game.css('td')[1].at_css('span.team-name span')
-          new_game.home_team = game.css('td')[1].css('span.team-name span').text
+          new_game.home_team_name = game.css('td')[1].css('span.team-name span').text
           home_abbr = game.css('td')[1].css('span.team-name abbr').text
         else
-          new_game.home_team = game.css('td')[1].css('a.team-name span').text
+          new_game.home_team_name = game.css('td')[1].css('a.team-name span').text
           home_abbr = game.css('td')[1].css('a.team-name abbr').text
+          home_espn_id = game.css('td')[1].css('a.team-name').attr('href').to_s[/#{'/_/id/'}(.*?)#{'/'}/m, 1]
         end
         neutral = game.attr('data-is-neutral-site')
         result = game.css('td')[2].text
         if result.include?('(')
-          puts result
           new_game.period = result[/\(.*?\)/]
-          puts new_game.period
+        end
+        season = Season.where(current: true).first
+        new_game.home_score = result[/#{home_abbr}([^,]+)/, 1]
+        new_game.away_score = result[/#{away_abbr}([^,]+)/, 1]
+        new_game.home_team = Team.find_by(espn_id: home_espn_id)
+        new_game.away_team = Team.find_by(espn_id: away_espn_id)
+        new_game.date = date
+        new_game.season = season
+        new_game.neutral = neutral
+        new_game.updated = DateTime.now
+        if new_game.home_team
+          new_game.home_team_season = TeamSeason.find_by(season: season, team: new_game.home_team)
+        end
+        if new_game.home_team
+          new_game.away_team_season = TeamSeason.find_by(season: season, team: new_game.away_team)
         end
         new_game.save
         x += 1

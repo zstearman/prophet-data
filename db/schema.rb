@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_163536) do
+ActiveRecord::Schema.define(version: 2018_07_25_152422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2018_07_24_163536) do
     t.bigint "season_id"
     t.integer "season_type"
     t.string "status"
-    t.string "away_team"
-    t.string "home_team"
+    t.string "away_team_name"
+    t.string "home_team_name"
     t.integer "away_score"
     t.integer "home_score"
     t.datetime "updated"
@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(version: 2018_07_24_163536) do
     t.integer "away_previous_espn_id"
     t.integer "home_previous_espn_id"
     t.integer "tournament_display_order"
+    t.date "date"
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "home_team_season_id"
+    t.integer "away_team_season_id"
+    t.boolean "neutral"
+    t.index ["espn_id"], name: "index_games_on_espn_id"
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
@@ -155,6 +162,7 @@ ActiveRecord::Schema.define(version: 2018_07_24_163536) do
     t.integer "espn_id"
     t.index ["abbreviation"], name: "index_teams_on_abbreviation"
     t.index ["conference_id"], name: "index_teams_on_conference_id"
+    t.index ["espn_id"], name: "index_teams_on_espn_id"
     t.index ["school"], name: "index_teams_on_school"
   end
 
@@ -169,6 +177,10 @@ ActiveRecord::Schema.define(version: 2018_07_24_163536) do
   end
 
   add_foreign_key "games", "seasons"
+  add_foreign_key "games", "team_seasons", column: "away_team_season_id"
+  add_foreign_key "games", "team_seasons", column: "home_team_season_id"
+  add_foreign_key "games", "teams", column: "away_team_id"
+  add_foreign_key "games", "teams", column: "home_team_id"
   add_foreign_key "players", "teams"
   add_foreign_key "teams", "conferences"
 end
