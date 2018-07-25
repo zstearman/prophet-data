@@ -99,12 +99,34 @@ namespace :set_up do
     (start_date..end_date).each do |day|
       url = "http://www.espn.com/mens-college-basketball/schedule/_/date/" + day.to_s + "/group/50"
       doc = Nokogiri::HTML(open(url))
-      games = doc.css('div#sched-container tr.odd, div.sched-container tr.even')
+      games = doc.css('div#sched-container tr.odd, div#sched-container tr.even')
       x = 0
       games.each do |game|
         game_url = game.css('td')[2].css('a').attr('href').to_s
         espn_id = game_url[game_url.index('gameId=') + 7, 9]
-        puts espn_id
+        new_game = Game.find_or_initialize_by(espn_id: espn_id)
+        if game.css('td')[0].at_css('span.team-name span')
+          new_game.away_team = game.css('td')[0].css('span.team-name span').text
+          away_abbr = game.css('td')[0].css('span.team-name abbr').text
+        else
+          new_game.away_team = game.css('td')[0].css('a.team-name span').text
+          away_abbr = game.css('td')[0].css('a.team-name abbr').text
+        end
+        if game.css('td')[1].at_css('span.team-name span')
+          new_game.home_team = game.css('td')[1].css('span.team-name span').text
+          home_abbr = game.css('td')[1].css('span.team-name abbr').text
+        else
+          new_game.home_team = game.css('td')[1].css('a.team-name span').text
+          home_abbr = game.css('td')[1].css('a.team-name abbr').text
+        end
+        neutral = game.attr('data-is-neutral-site')
+        result = game.css('td')[2].text
+        if result.include?('(')
+          puts result
+          new_game.period = result[/\(.*?\)/]
+          puts new_game.period
+        end
+        new_game.save
         x += 1
       end
       puts x.to_s + " games on " + day.to_s
