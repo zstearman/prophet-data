@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     get    '/get players',  to: 'admin#get_players'
     resources :teams, only: [:index, :show]
     resources :conferences, only: [:index, :show]
+    resources :seasons, only: [:index, :show]
+    resources :games, only: [:index]
 end

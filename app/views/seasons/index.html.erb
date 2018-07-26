@@ -14,7 +14,7 @@
   <tbody>
     <% @seasons.each do |season| %>
       <tr>
-        <td><%= season.id %></td>
+        <td><%= link_to season.id, season %></td>
         <td><%= season.start_year %></td>
         <td><%= season.end_year %></td>
         <td><%= season.description %></td>

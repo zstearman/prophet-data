@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>ESPN ID</th>
+      <th>Date</th>
+      <th>Home Team</th>
+      <th>Away Team</th>
+      <th>Score</th>
+      <th>Neutral?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @season.games.all.each do |game| %>
+    <tr>
+      <td><%= game.espn_id %></td>
+      <td><%= game.date %></td>
+      <td><%= game.home_team_name %></td>
+      <td><%= game.away_team_name %></td>
+      <td><%= game.home_score.to_s + "-" + game.away_score.to_s %></td>
+      <td><%= game.neutral %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
