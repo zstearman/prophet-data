@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_25_152422) do
+ActiveRecord::Schema.define(version: 2018_07_26_155328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,11 +112,11 @@ ActiveRecord::Schema.define(version: 2018_07_25_152422) do
     t.integer "fga"
     t.decimal "fga_per_game"
     t.decimal "fg_pct"
-    t.integer "tpm"
+    t.integer "three_points_made"
     t.decimal "tpm_per_game"
-    t.integer "tpa"
+    t.integer "three_points_attempted"
     t.decimal "tpa_per_game"
-    t.decimal "tp_pct"
+    t.decimal "three_points_pct"
     t.integer "ftm"
     t.decimal "ftm_per_game"
     t.integer "fta"
@@ -144,6 +144,9 @@ ActiveRecord::Schema.define(version: 2018_07_25_152422) do
     t.decimal "fouls_drawn_per_game"
     t.integer "point_diff"
     t.decimal "point_diff_per_game"
+    t.integer "two_points_made"
+    t.integer "two_points_attempted"
+    t.decimal "two_points_pct"
     t.index ["conference_id"], name: "index_team_seasons_on_conference_id"
     t.index ["season_id"], name: "index_team_seasons_on_season_id"
     t.index ["team_id"], name: "index_team_seasons_on_team_id"
