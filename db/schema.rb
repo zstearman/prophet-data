@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_26_155328) do
+ActiveRecord::Schema.define(version: 2018_08_05_150456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,66 @@ ActiveRecord::Schema.define(version: 2018_07_26_155328) do
     t.boolean "current"
     t.index ["end_year"], name: "index_seasons_on_end_year"
     t.index ["start_year"], name: "index_seasons_on_start_year"
+  end
+
+  create_table "team_games", force: :cascade do |t|
+    t.bigint "game_id_id"
+    t.bigint "team_id_id"
+    t.bigint "team_season_id_id"
+    t.integer "opponent_id"
+    t.integer "opponent_team_season_id"
+    t.integer "opponent_team_game_id"
+    t.string "type"
+    t.boolean "conference"
+    t.integer "minutes"
+    t.integer "score"
+    t.integer "opponent_score"
+    t.string "period"
+    t.integer "wins"
+    t.integer "losses"
+    t.integer "conference_wins"
+    t.integer "conference_losses"
+    t.integer "points"
+    t.integer "points_allowed"
+    t.integer "fgm"
+    t.integer "fga"
+    t.decimal "fg_pct"
+    t.integer "three_points_made"
+    t.integer "three_points_attempted"
+    t.decimal "three_points_pct"
+    t.integer "two_points_made"
+    t.integer "two_points_attempted"
+    t.decimal "two_points_pct"
+    t.integer "ftm"
+    t.integer "fta"
+    t.decimal "ft_pct"
+    t.integer "oreb"
+    t.integer "dreb"
+    t.integer "rebounds"
+    t.decimal "oreb_pct"
+    t.decimal "dreb_pct"
+    t.decimal "reb_pct"
+    t.integer "assists"
+    t.decimal "assists_pct"
+    t.integer "tov"
+    t.decimal "tov_pct"
+    t.integer "steals"
+    t.decimal "steals_pct"
+    t.integer "blocks"
+    t.decimal "blocks_pct"
+    t.integer "fouls"
+    t.integer "fouls_drawn"
+    t.decimal "eft_pct"
+    t.decimal "ts_pct"
+    t.decimal "ftm_fga"
+    t.decimal "pace"
+    t.decimal "o_rtg"
+    t.decimal "d_rtg"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id_id"], name: "index_team_games_on_game_id_id"
+    t.index ["team_id_id"], name: "index_team_games_on_team_id_id"
+    t.index ["team_season_id_id"], name: "index_team_games_on_team_season_id_id"
   end
 
   create_table "team_seasons", force: :cascade do |t|
